@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+        <head>
+               <script src="processing-1.4.js"></script>
+               <script type="text/processing" data-processing-target="mycanvas">
+					//real dots + position
+					var x1 = (int(random(15, 320)));
+					var y1 = (int(random(270, 440)));
+					var x2 = (int(random(15, 320)));
+					var y2 = (int(random(440,620)));
+					var x3 = (int(random(15, 320)));
+					var y3 = (int(random(620,800)));
+					var x4 = (int(random(15, 320)));
+					var y4 = (int(random(800,940)));
+					var x5 = (int(random(320,620)));
+					var y5 = (int(random(270, 440)));
+					var x6 = (int(random(320,620)));
+					var y6 = (int(random(440,620)));
+					var x7 = (int(random(320,620)));
+					var y7 = (int(random(620,800)));
+					var x8 = (int(random(320,620)));
+					var y8 = (int(random(800,940)));
+					
+					//distraction dots + position
+					var dx2 = (int(random(15, 320)));
+					var dy2 = (int(random(440,620)));
+					var dx3 = (int(random(15, 320)));
+					var dy3 = (int(random(620,800)));
+					var dx4 = (int(random(15, 320)));
+					var dy4 = (int(random(800,940)));
+					var dx5 = (int(random(320,620)));
+					var dy5 = (int(random(270, 440)));
+					var dx6 = (int(random(320,620)));
+					var dy6 = (int(random(440,620)));
+					var dx7 = (int(random(320,620)));
+					var dy7 = (int(random(620,800)));
+					var dx8 = (int(random(320,620)));
+					var dy8 = (int(random(800,940)));
+
+					//dots
+					var dot1;
+					var dot2;
+					var dot3;
+					var dot4;
+					var dot5;
+					var dot6;
+					var dot7;
+					var dot8;
+					var dotdis1;
+					var dotdis2;
+					var dotdis3;
+					var dotdis4;
+					var dotdis5;
+					var dotdis6;
+					var dotdis7;
+					
+					//water
+					var x = 0;
+					var y = 960;
+					var speedy = 1.1;
+					var hgh = 0;
+					
+					boolean mouseClickedAtdot1 = false;
+					boolean dot1Clicked = false;
+					boolean dot2Clicked = false;
+					boolean dot3Clicked = false;
+					boolean line1 = false;
+					boolean line2 = false;
+					boolean line3 = false;
+					boolean line4 = false;
+					boolean line5 = false;
+					boolean line6 = false;
+					boolean line7 = false;
+					boolean line8 = false;
+					boolean gameover = false;
+					boolean allconnected = false;
+					
+					//conservation facts for game over
+					var facts= ["A leaky faucet can waste 100 gallons a day. Check your faucets!", 
+					"One flush of the toilet uses 6.5 gallons of water. Don't flush insects, paper, etc. down the toilet.", 
+					"If you water your plants more heavily, but less often, you can save water and build stronger roots.",
+					"When washing a car, use soap and water from a bucket. Use a hose with a shut-off nozzle for rinsing.",
+					"An automatic dishwasher uses 9 to 12 gallons of water while hand-washing dishes can use up to 20 gallons.",
+					"Use bowl of water to clean fruits/vegetables rather than running water. Reuse the water for plants.",
+					"Turn your water off when brushing your teeth; you can save up to 5 gallons of water.",
+					"Take short showers instead of baths! A full bathtub needs about 37 gallons of water.",
+					"748 million people do not have access to safe, clean drinking water. Don't take your water for granted!",
+					"Every day, 1,400 children die from diseases caused by unsafe water or inadequate sanitation."];
+					
+					//timer
+					var time = 0;
+					var f = createFont("impact");
+					var f2 = createFont("comic sans ms");
+					PImage c;
+					c = loadImage("garden.jpg");
+					
+					void setup(){
+						size(640, 960);
+						background(255,240,245);
+						dot1 = new Dot(x1,y1,20,20,1);
+						dot2 = new Dot(x2,y2,20,20,2);
+						dot3 = new Dot(x3,y3,20,20,3);
+						dot4 = new Dot(x4,y4,20,20,4);
+						dot5 = new Dot(x5,y5,20,20,5);
+						dot6 = new Dot(x6,y6,20,20,6);
+						dot7 = new Dot(x7,y7,20,20,7);
+						dot8 = new Dot(x8,y8,20,20,8);
+						dotdis1 = new Dot(dx2,dy2,20,20,2);
+						dotdis2 = new Dot(dx3,dy3,20,20,3);
+						dotdis3 = new Dot(dx4,dy4,20,20,4);
+						dotdis4 = new Dot(dx5,dy5,20,20,5);
+						dotdis5 = new Dot(dx6,dy6,20,20,6);
+						dotdis6 = new Dot(dx7,dy7,20,20,7);
+						dotdis7 = new Dot(dx8,dy8,20,20,8);
+					}
+					
+					void draw() {
+						background(255,240,245);
+						image(c, 0, 0, 640, 960);
+						line(0,260,960,260);
+						
+						//moves water up
+						if (mouseClickedAtdot1 == true) {
+							if(y<=260 && y>=200){
+								hgh=hgh;
+								y=y;
+								gameover = true;
+								
+							}
+							else {
+								y=y-speedy;
+								hgh=hgh+speedy;
+								time = time + 0.017;
+							}
+							fill(0,191,255);
+							rect(x,y,640,hgh);
+						}
+						
+						
+						
+						dot1.drawDot();
+						dot2.drawDot();
+						dot3.drawDot();
+						dot4.drawDot();
+						dot5.drawDot();
+						dot6.drawDot();
+						dot7.drawDot();
+						dot8.drawDot();
+						dotdis1.drawDot();
+						dotdis2.drawDot();
+						dotdis3.drawDot();
+						dotdis4.drawDot();
+						dotdis5.drawDot();
+						dotdis6.drawDot();
+						dotdis7.drawDot();
+						
+						//connects dots with lines
+						if (line1 == true) {
+							line(x1,y1, x2,y2);
+						}
+						if (line2 == true) {
+							line(x2,y2, x3,y3);
+						}
+						if (line3 == true) {
+							line(x3,y3,x4,y4);
+						}
+						if (line4 == true) {
+							line(x4,y4,x5,y5);
+						}
+						if (line5 == true) {
+							line(x5,y5,x6,y6);
+						}
+						if (line6 == true) {
+							line(x6,y6,x7,y7);
+						}
+						if (line7 == true) {
+							line(x7,y7,x8,y8);
+						}
+						if (line8 == true) {
+							line(x8,y8,x1,y1);
+						}
+						if (gameover == true){
+							alert("Game Over!");
+							alert(facts[(int(random(0,8)))]);
+							link("cdwlvl4.html");
+						}
+						if(allconnected == true){
+							alert("Congratulations! You win!");
+							link("cdwlvl5.html");
+						}
+						textFont(f, 25);
+						text("Time:", 50, 50);
+						text("Level:", 480, 50);
+						textFont(f2,25);
+						text(time, 120, 50);
+						text("4", 550, 50);
+					}
+					
+					//allows for dots to be clicked + lines to be drawn
+					void mousePressed (){
+						if (mouseX>x1-15 && mouseX<x1+15 && mouseY>y1-15 && mouseY<y1+15) {
+							mouseClickedAtdot1 = true;
+							var dot1Click = 0;
+							if(dot1Click == 0) {
+								dot1Clicked=true;
+								dot1Click = dot1Click + 1;
+							}
+							else if(dot1Click==1){
+								dot1Click = 1;
+								}
+							else{
+							}
+							
+						}
+						
+						if (mouseX>x2-15 && mouseX<x2+15 && mouseY>y2-15 && mouseY<y2+15){
+							dot2Clicked = true;
+						}
+						
+						if(mouseX>x3-15 && mouseX<x3+15 && mouseY>y3-15 && mouseY<y3+15){
+							dot3Clicked = true;
+						}
+						
+						if(mouseX>x4-15 && mouseX<x4+15 && mouseY>y4-15 && mouseY<y4+15){
+							dot4Clicked = true;
+						}
+						if(mouseX>x5-15 && mouseX<x5+15 && mouseY>y5-15 && mouseY<y5+15){
+							dot5Clicked = true;
+						}
+						if(mouseX>x6-15 && mouseX<x6+15 && mouseY>y6-15 && mouseY<y6+15){
+							dot6Clicked = true;
+						}
+						if(mouseX>x7-15 && mouseX<x7+15 && mouseY>y7-15 && mouseY<y7+15){
+							dot7Clicked = true;
+						}
+						if(mouseX>x8-15 && mouseX<x8+15 && mouseY>y8-15 && mouseY<y8+15){
+							dot8Clicked = true;
+						}
+						
+						if (dot1Clicked == true && dot2Clicked == true) {
+							line1 = true;
+							dot1Clicked = false;
+							
+						}
+						if (dot2Clicked == true && dot3Clicked == true) {
+							line2 = true;
+							dot2Clicked = false;
+							
+						}
+						if (dot3Clicked == true && dot4Clicked == true) {
+							line3 = true;
+							dot3Clicked = false;
+						}
+						if (dot4Clicked == true && dot5Clicked == true) {
+							line4 = true;
+							dot4Clicked = false;
+						}
+						if (dot5Clicked == true && dot6Clicked == true) {
+							line5 = true;
+							dot5Clicked = false;
+						}
+						if (dot6Clicked == true && dot7Clicked == true) {
+							line6 = true;
+							dot6Clicked = false;
+						}
+						if (dot7Clicked == true && dot8Clicked == true) {
+							line7 = true;
+							dot7Clicked = false;
+						}
+						if (dot8Clicked == true && dot1Click == 1) {
+							line8 = true;
+							allconnected = true;
+						}
+						
+					}
+					
+					class Dot{
+						var width;
+						var height;
+						var xPos;
+						var yPos;
+						var order;
+						
+						Dot(x, y, w, h, o){
+							width = w;
+							height = h;
+							xPos = x;
+							yPos = y;
+							order = o;
+						}
+						void drawDot(){
+							fill(255,255,0);
+							ellipse(xPos,yPos,width,height);
+							fill(0,0,0);
+							text(order, xPos-4, yPos+4);
+						}
+					}
+						
+							
+				</script>
+        </head>
+		
+		
+        <body>
+                <canvas id="mycanvas"></canvas>
+        </body>
+</html>
